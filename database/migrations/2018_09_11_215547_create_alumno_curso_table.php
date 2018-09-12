@@ -18,12 +18,12 @@ class CreateAlumnoCursoTable extends Migration
 
             $table->timestamps();
 
-            $table->unsignedInteger('alumno_id');
+            $table->integer('alumno_id')->unsigned();
             $table->foreign('alumno_id')->references('id')->on('alumnos')
             ->onDelete('cascade')
             ->onUpdate('cascade');
 
-            $table->unsignedInteger('curso_id');
+            $table->integer('curso_id')->unsigned(); 
             $table->foreign('curso_id')->references('id')->on('cursos')
             ->onDelete('cascade')
             ->onUpdate('cascade');

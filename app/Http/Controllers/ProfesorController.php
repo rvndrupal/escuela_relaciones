@@ -27,9 +27,8 @@ class ProfesorController extends Controller
      */
     public function create()
     {
-        $alumnos=Alumno::orderBy('nombre','ASC')->pluck('nombre','id');//paso solo el nombre y el id
-       // dd($alumnos);
-        return view('profesors.create',compact('alumnos'));
+       
+        return view('profesors.create');
     }
 
     /**

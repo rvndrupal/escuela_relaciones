@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Alumno;
+use App\Profesor;
+use App\Curso;
 use Illuminate\Http\Request;
 
 class AlumnoController extends Controller
@@ -26,7 +28,12 @@ class AlumnoController extends Controller
      */
     public function create()
     {
-        return view('alumnos.create');
+        $profesores=Profesor::orderBy('nombre','ASC')->pluck('nombre','id');//paso solo el nombre y el id
+        $cursos=Curso::orderBy('nombre','ASC')->pluck('nombre','id');//paso solo el nombre y el id
+        //dd($cursos);
+
+
+        return view('alumnos.create',compact('profesores','cursos'));
     }
 
     /**
@@ -39,7 +46,11 @@ class AlumnoController extends Controller
     {
         $alumno=Alumno::create($request->all());
 
-      
+        //relacion de muchos a muchos alumno->curso
+        //$alumno->cursos()->attach($request->get('curso')); //la magia de muchos a muchos
+
+        $alumno->cursos()->sync($request->curso);
+        //super importante para que se inserte los valores en los dos registros
         
         return redirect()->route('alumnos.index')
         ->with('info','Alumno guardado con exito');
