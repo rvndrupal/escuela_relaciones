@@ -16,7 +16,7 @@ class CreateAlumnoCursoTable extends Migration
         Schema::create('alumno_curso', function (Blueprint $table) {
             $table->increments('id');           
 
-            $table->timestamps();
+      
 
             $table->integer('alumno_id')->unsigned();
             $table->foreign('alumno_id')->references('id')->on('alumnos')
@@ -27,6 +27,8 @@ class CreateAlumnoCursoTable extends Migration
             $table->foreign('curso_id')->references('id')->on('cursos')
             ->onDelete('cascade')
             ->onUpdate('cascade');
+
+            $table->timestamps();
         });
     }
 

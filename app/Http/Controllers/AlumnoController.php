@@ -17,6 +17,9 @@ class AlumnoController extends Controller
     public function index()
     {
         $alumnos=Alumno::paginate(5);
+        
+        
+        //dd($alumnos);
 
         return view('alumnos.index', compact('alumnos'));
     }
@@ -45,11 +48,12 @@ class AlumnoController extends Controller
     public function store(Request $request)
     {
         $alumno=Alumno::create($request->all());
+      
 
         //relacion de muchos a muchos alumno->curso
-        //$alumno->cursos()->attach($request->get('curso')); //la magia de muchos a muchos
+        $alumno->cursos()->attach($request->get('cursos')); //la magia de muchos a muchos
 
-        $alumno->cursos()->sync($request->curso);
+        //$alumno->curso()->sync($request->curso);
         //super importante para que se inserte los valores en los dos registros
         
         return redirect()->route('alumnos.index')
